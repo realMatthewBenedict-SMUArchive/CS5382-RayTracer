@@ -12,6 +12,7 @@ function uiInit() {
     const worldData11 = makeWorldSection11();
     const worldData12 = makeWorldSection12();
     const worldData14 = makeWorldSection14();
+    const customWorldData = makeCustomWorld();
 
     $(".ui-action-render").click((e) => {
 		const surface = sgx.graphics.DrawSurfaceManager.get().getDisplaySurface();
@@ -78,7 +79,7 @@ function uiInit() {
                 worldData = worldData06;
                 break;
 
-				case 90: // stage 9, version 0
+            case 90: // stage 9, version 0
                 camera = new raytracer.s08.Camera(surface);
                 camera.settings.fixShadowAcne = false;
                 camera.settings.scatteringAlgorithm = raytracer.s08.CameraSettings.SCATTER_LINEAR;
@@ -167,6 +168,15 @@ function uiInit() {
                 camera.settings.applyDefocus = true;
                 camera.setSamplesPerPixel(50);
                 worldData = worldData14;
+                break;
+            
+            case 150: // stage 15, version 0
+                camera = new raytracer.custom_s15.Camera(surface);
+                camera.fov = 20;
+                camera.lookfrom = new raytracer.point3(13, 5, 3);
+                camera.lookat = new raytracer.point3(0, 0, 0);
+                camera.vup = new raytracer.vec3(0, 1, 0);
+                worldData = customWorldData;
                 break;
         }
 

@@ -2,13 +2,15 @@ import { vec3 } from "../modules/vec3.js";
 import { HitRecord, Hittable } from "./hittable.js";
 
 
-class Sphere extends Hittable {
+class Cube extends Hittable {
 
     constructor(center, radius, material) {
         super();
         //
         this.center_ = new vec3(center);
         this.radius_ = radius;
+        //this.true_center = new vec3(center);
+        //this.true_radius = radius;
         this.material = material;
 
         // VARIATION: Cached objects to avoid expensive ctor in the hit() method
@@ -19,7 +21,9 @@ class Sphere extends Hittable {
 
     // NOTE: we haven't used the interval directly, like the book
     hitInterval(the_ray, the_ray_interval) {
-        return this.hit(the_ray, the_ray_interval.min(), the_ray_interval.max());
+        console.log("Not implemented");
+        return null;
+        //return this.hit(the_ray, the_ray_interval.min(), the_ray_interval.max());
     }
 
 
@@ -28,9 +32,17 @@ class Sphere extends Hittable {
         let oc = this.oc;
         oc.set(this.center_);
         oc.sub(the_ray.origin());
+        
+        const fudge_x = 0.03 + 0.0036 * this.radius_ * this.radius_;// * the_ray.direction().x;
+        const fake_oc = new vec3(oc.x + fudge_x, oc.y, oc.z);
+        //const fake_oc = oc;
     
+        // const a = the_ray.direction().getMagnitudeSquared();
+//         const h = the_ray.direction().dot(fake_oc);
+//         const c = oc.getMagnitudeSquared() - this.radius_*this.radius_;
+        
         const a = the_ray.direction().getMagnitudeSquared();
-        const h = the_ray.direction().dot(oc);
+        const h = the_ray.direction().dot(fake_oc);
         const c = oc.getMagnitudeSquared() - this.radius_*this.radius_;
     
         const discriminant = h*h - a*c;
@@ -68,4 +80,4 @@ class Sphere extends Hittable {
 }
 
 
-export { Sphere };
+export { Cube };

@@ -5,7 +5,6 @@ import { ray } from "../modules/ray.js";
 
 class Lambertian extends Material {
 #albedo
-
     constructor(albedo) {
         super();
 
@@ -32,4 +31,31 @@ class Lambertian extends Material {
 }
 
 
-export { Lambertian };
+class LambertianTexture extends Material {
+
+    constructor(tex) {
+        super();
+
+        this.tex = tex;
+    }
+
+    // returned scattered ray
+    scatter(the_ray, hitRecord) {
+        let scatter_direction = sgxPoint3f.randomUnit();
+        scatter_direction.add(hitRecord.normal());
+
+        // Catch degenerate scatter direction
+        if (scatter_direction.nearZero()) {
+            scatter_direction = hitRecord.normal();
+        }
+        
+        const scattered = new ray(hitRecord.point(), scatter_direction);
+
+        return {
+            scattered,
+            attenuation: this.tex.value(hitRecord.u, hitRecord.v, hitRecord.point())
+        }
+    }
+}
+
+export { Lambertian, LambertianTexture };

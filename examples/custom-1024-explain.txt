@@ -1,0 +1,14 @@
+This image code originates from chapter 14 of the book, and the checkerboard texture mapping was taken from chapter 4 of the second book.
+
+In addition to changing the color parameters for the sky and grid, and adding a second layer of spheres, I wish to draw attention to the large dielectric sphere near the center at (3, 1, 0).
+
+Unlike the other spheres, this sphere has an extra fudge factor in the hit function, which makes it appear to be trapped inside another sphere with warped reflections from behind.
+
+Since the large number of reflective surfaces leads to excessive runtime for this scene at this size, I chose to set the recursive depth and sampling count at 10 and 20, respectively, to provide fairly decent quality, without taking hours to run.
+
+Resolution: 1024 × 576 pixels
+Recursive depth: 10
+Sampling count: 20
+Last frame: 683.11 seconds (11 minutes, 23.11 seconds)
+Wall clock: 975.68 seconds (16 minutes, 15.68 seconds)
+Camera location: (13, 5, 3) looking at (0, 0, 0), 20 degree FOV
